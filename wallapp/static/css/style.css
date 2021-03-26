@@ -1,0 +1,44 @@
+.header{
+    border-bottom: solid black 0.25rem;
+    margin-bottom: 4rem;
+}
+
+.post-btn{
+    width: 10rem;
+    margin: 2rem auto;
+}
+
+.log-out{
+    width: 9rem;
+    height: 3rem;
+}
+
+#comment{
+    width: 40rem;
+    margin: 0 auto;
+}
+
+#message{
+    width: 70rem;
+    margin: 0 auto 2rem auto;
+}
+
+.post_a_message{
+    margin-left: 6rem;
+}
+
+.post_comment_label{
+    margin-left: 20rem;
+}
+
+.message-comments{
+    padding-left: 4rem;
+}
+h6{
+    font-weight: bold;
+}
+
+.message-header{
+    display: flex;
+    justify-content: space-between;
+}

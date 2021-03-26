@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Wall</title>
+    {% load static %}	
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    
+    <div class="header d-flex justify-content-around pt-3 pb-3">
+        <h1>The Wall </h1>
+        <p>Welcome, {{request.session.first_name}}!</p>
+        <a href = "/logout" class= "btn btn-danger log-out">Logout</a>
+    </div>
+
+        <div class="post_message">
+            <form action="/message" method="POST" class="container d-flex flex-column justify-content-center align-items-center">
+                {% csrf_token %}
+                <label for="message" class="form-label post_a_message">Post a Message</label>
+                <textarea type="text" cols="30" rows="10" class="form-control" name="msg" placeholder="Post a message..."></textarea>
+                <button type="submit" class="btn btn-primary" value ="Post it" >Post Message</button>
+            </form>
+        </div>
+        <div class="container flex justify-content-around pt-3 pb-3">
+            <h3 class="text-center mt-5 mb-3">Message Board</h3>
+            <div class="bg-light p-3">
+            {% for msg in messages%}
+                <div class="message-header">
+                    {{msg.user.first_name}} {{msg.user.last_name}} {{msg.updated_at}}
+                    <h3>Message:</h3>
+                    <p class="message-comments">{{msg.message}}</p>
+                    <a href="/delete/{{msg.id}}" class="btn btn-danger">Delete Message</a>
+                </div>
+                    <div class="user_comments ml-3">
+                        <h3>Comments:</h3>
+                        {% for comment in msg.comments.all %} {# This grabs all of the comments for this specific comment #}
+                            <h4>Added by:</h4>
+                            {{comment.user.first_name}} {{comment.user.last_name}} {{comment.updated_at}}
+                            <p class="message-comments">{{comment.comment}}</p>
+                        {% endfor %}
+                    </div>
+                    <form action="/comment/{{msg.id}}"  method="POST" class="container d-flex flex-column">
+                        {% csrf_token %}
+                        <label for="comment" class="form-label post_comment_label">Post a Comment</label>
+                        <textarea  name="cmnt" cols="30" rows="10" class="form-control" placeholder="Leave {{msg.user.first_name}} a comment..."></textarea>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary mt-3 mb-5 post-btn">Post Comment</button>
+                        </div>
+                    </form>
+            {% endfor %}
+            </div>  
+                        
+        </div>
+</body>
+</html>
